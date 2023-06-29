@@ -20,7 +20,7 @@ typedef struct{
 
 menuEntry ulist[] = {
     {strdup("Backup Firmware"), strdup("Backup your current Firmware to SD Card"), UI::backupListFiles},
-    {strdup("Restore Firmware"), strdup("Restore Firmware from SD Card to Joycon"), UI::restoreListFiles},
+    {strdup("Restore Firmware"), strdup("Restore Firmware from SD Card to Joy-Con"), UI::restoreListFiles},
     {strdup("Change SN"), strdup("Change your current SN to a userdefined"), UI::changeMenu},
     {strdup("Restore SN"), strdup("Restore SN to normal"), UI::restoreMenu},
     {strdup("Exit"), NULL, NULL},
@@ -57,15 +57,15 @@ void UI::mainMenu(void){
         }
         
         if(hidGetHandheldMode() == false){
-            printf("Not in Handheld mode. Plug in some Joycons.\n");
+            printf("Not in Handheld mode. Plug in some Joy-Cons.\n");
             consoleUpdate(NULL);
             svcSleepThread(4*1000000000ull); //Wait 4 Seconds and exit
             break;
         }
         
-        printf("Welcome to the Joycon Utility\nThis application doesn't have any fancy gfx\n\n");
-        printf("Left Joycon: %s\n", origLeft);
-        printf("Right Joycon: %s\n\n", origRight);
+        printf("Welcome to the Joy-Con Utility\nThis application doesn't have any fancy gfx\n\n");
+        printf("Left Joy-Con: %s\n", origLeft);
+        printf("Right Joy-Con: %s\n\n", origRight);
         printf("Main menu: \n\n");
         
         for(int i=0;i<listEntries;i++){
@@ -154,8 +154,8 @@ void UI::changeMenu(void){
         consoleClear();
         printf("Change SN - Here you can change your Serial Number: \n\n");
         printf("Press [A] to Select - [B] to exit\n");
-        printf("[L] to select LEFT Joycon - [R] to select RIGHT Joycon\n");
-        printf("Selected Joycon: \x1B[32m%s Joycon\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
+        printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         
         for(int i=0;i<clistEntries;i++){
             if(curPos != i){
@@ -251,8 +251,8 @@ void UI::restoreMenu(void){
         consoleClear();
         printf("Restore SN - Here you can restore your Serial Number: \n\n");
         printf("Press [A] to Select - [B] to exit\n");
-        printf("[L] to select LEFT Joycon - [R] to select RIGHT Joycon\n");
-        printf("Selected Joycon: \x1B[32m%s Joycon\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
+        printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<rlistEntries;i++){
             if(curPos != i){
                 printf("    %s\n", rlist[i].menuList);
@@ -348,8 +348,8 @@ void UI::restoreListFiles(void){
     int pad = 0;
     while(1){
         consoleClear();
-        printf("Select a file to Restore.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joycon - [R] to select RIGHT Joycon\n");
-        printf("Selected Joycon: \x1B[32m%s Joycon\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
+        printf("Select a file to Restore.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
                 printf("    %-50s\tSize: %liBytes\n", list[i], dfile->getFileSize(list[i]));
@@ -428,8 +428,8 @@ void UI::backupListFiles(void){
     int pad = 0;
     while(1){
         consoleClear();
-        printf("Select a file to Backup.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joycon - [R] to select RIGHT Joycon\n");
-        printf("Selected Joycon: \x1B[32m%s Joycon\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
+        printf("Select a file to Backup.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
                 if(strcmp(list[i], "[NEW FILE]") == 0){
@@ -517,7 +517,7 @@ void UI::backupListFiles(void){
 
 void UI::confirmWrite(int padnum, char *sFile){
     consoleClear();
-    printf("Are you sure to flash the Backup to your Joycon?\n");
+    printf("Are you sure to flash the Backup to your Joy-Con?\n");
     printf("Press [Y] to continue, [B] to exit\n\n");
     consoleUpdate(NULL);
     while(1){
@@ -526,9 +526,9 @@ void UI::confirmWrite(int padnum, char *sFile){
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         
         if(kDown & KEY_Y){
-            printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOYCON!\n");
-            printf("DO NOT UNPLUG ANY JOYCON IN FLASHING STATE!\n");
-            printf("USING A WRONG FIRMWARE FOR THE WRONG JOYCON WILL BRICK YOUR JOYCON!\n");
+            printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOY-CON!\n");
+            printf("DO NOT UNPLUG ANY JOY-CON IN FLASHING STATE!\n");
+            printf("USING A WRONG FIRMWARE FOR THE WRONG JOY-CON WILL BRICK YOUR JOY-CON!\n");
             printf("YOU CANNOT INTERRUPT THIS TASK!\n");
             printf("I WILL NOT TAKE ANY RISK FOR YOUR FAILURE!\nARE YOU SURE?\n");
             printf("Press [ZR] to continue, [B] to exit\n\n");
@@ -545,7 +545,7 @@ void UI::confirmWrite(int padnum, char *sFile){
                     delete writer;
                     appletEndBlockingHomeButtonShortAndLongPressed();
                     if((ret == -621) || (ret == -622)){
-                        printf("Wrong firmware for this Joycon!!\n");
+                        printf("Wrong firmware for this Joy-Con!!\n");
                         consoleUpdate(NULL);
                         break;
                     }

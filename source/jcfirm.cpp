@@ -102,12 +102,12 @@ int JCFirm::writeFirmwareFile(int padnum, char *sFile){
         }
     }
     
-    fseek(fd, 0, SEEK_SET); //Almost bricked my Joycon because I forgot it. ':)
+    fseek(fd, 0, SEEK_SET); //Almost bricked my Joy-Con because I forgot it. ':)
     
     /*
      We are checking if we are allowed to restore that firmware by checking the
-     serial from the dump with the joycon. DO NOT TRY FLASHING THE RIGHT FIRMWARE
-     TO A LEFT JOYCON OR THE OPPOSITE WAY! ITS A PAIN IN THE A** TO FIX THIS!
+     serial from the dump with the Joy-Con. DO NOT TRY FLASHING THE RIGHT FIRMWARE
+     TO A LEFT JOY-CON OR THE OPPOSITE WAY! IT'S A PAIN IN THE A$$ TO FIX THIS!
      */
     if(memcmp(checkSN1, ptrSN, 14) != 0){
         if(memcmp(checkSN, ptrSN, 14) != 0){

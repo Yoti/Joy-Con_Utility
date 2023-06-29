@@ -38,8 +38,8 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
 
-APP_TITLE := Joycon Utility
-APP_AUTHOR := dx3m
+APP_TITLE := Joy-Con Utility
+APP_AUTHOR := dx3m & Yoti
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
