@@ -15,7 +15,7 @@ JCFirm::~JCFirm(){
 
 bool JCFirm::getUIDFromPads(void){
     Result pads;
-    
+
     pads = hidsysGetUniquePadsFromNpad(CONTROLLER_HANDHELD, PadIds, 2, &entries);
     if(entries != 2){
         return false;
@@ -26,26 +26,26 @@ bool JCFirm::getUIDFromPads(void){
     else{
         return false;
     }
-    
+
     return false;
 }
 
 bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
     printf("\nDumping..\n");
     printf("Press [B] to cancel\n");
-    
+
     fd = fopen(sFile, "wb");
     if((fd==NULL) || (firmBuffer == NULL)){
         return false;
     }
-    
+
     for(int i=0;i<0x400;i++){
         hidScanInput();
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        
+
         hiddbgReadSerialFlash(i*0x200, firmBuffer, 0x200, PadIds[padnum]);
         fwrite(firmBuffer, 1, 0x200, fd);
-        
+
         progress = (float) (i+1) / 0x400 * 100;
         printf("Progress: %.1f%%\r", progress);
         consoleUpdate(NULL);
@@ -55,10 +55,10 @@ bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
         }
     }
     fclose(fd);
-    
+
     printf("\nDONE!");
     consoleUpdate(NULL);
-    
+
     return true;
 }
 
@@ -72,23 +72,23 @@ int JCFirm::writeFirmwareFile(int padnum, char *sFile){
     if((fd==NULL) || (firmBuffer == NULL)){
         return -2;
     }
-    
+
     char checkSN[15];
     char checkSN1[15];
     char *ptrSN = getSNFromPadBackup(padnum);
-    
+
     //Original Serial from backup
     fseek(fd, 0x6002, SEEK_SET);
     fread(checkSN, 1, 14, fd);
-    
+
     //Backup Serial from backup
     fseek(fd, 0xF002, SEEK_SET);
     fread(checkSN1, 1, 14, fd);
-    
+
     char type[1];
     fseek(fd, 0x6012, SEEK_SET);
     fread(type, 1, 1, fd);
-    
+
     if(type[0] == 0x01){
         if(getTypeFromPad(padnum) != 1){
             free(ptrSN);
@@ -101,9 +101,9 @@ int JCFirm::writeFirmwareFile(int padnum, char *sFile){
             return -622;
         }
     }
-    
+
     fseek(fd, 0, SEEK_SET); //Almost bricked my Joy-Con because I forgot it. ':)
-    
+
     /*
      We are checking if we are allowed to restore that firmware by checking the
      serial from the dump with the Joy-Con. DO NOT TRY FLASHING THE RIGHT FIRMWARE
@@ -117,21 +117,21 @@ int JCFirm::writeFirmwareFile(int padnum, char *sFile){
         }
     }
     free(ptrSN);
-    
+
     for(int i=0;i<0x400;i++){
         fread(firmBuffer, 1, 0x200, fd);
         Result r = hiddbgWriteSerialFlash(i*0x200, firmBuffer, 0x1000, 0x200, PadIds[padnum]);
-        
+
         if(!R_SUCCEEDED(r)){
             return -3;
         }
-        
+
         progress = (float) (i+1) / 0x400 * 100;
         printf("\x1B[31mWRITING: %.1f%%\r", progress);
         consoleUpdate(NULL);
     }
     fclose(fd);
-    
+
     printf("\x1B[0m\nDONE!");
     consoleUpdate(NULL);
     return 0;
@@ -179,7 +179,7 @@ void JCFirm::getSNFromPadBackup(char *sn0, char *sn1){
         memcpy(sn1, sn, 14);
         free(sn);
     }
-    
+
     memcpy(sn0, SN0, 14);
     memcpy(sn1, SN1, 14);
 }
@@ -187,14 +187,14 @@ void JCFirm::getSNFromPadBackup(char *sn0, char *sn1){
 int JCFirm::getTypeFromPad(int padnum){
     char type[1];
     hiddbgReadSerialFlash(0x6012, type, 1, PadIds[padnum]);
-    
+
     if(type[0] == 0x01){
         return 1;
     }
     else if(type[0] == 0x02){
         return 2;
     }
-    
+
     return 0;
 }
 
@@ -203,11 +203,11 @@ bool JCFirm::changeSN(int padnum){
         return false;
     }
     char *origSN = getSNFromPad(padnum);
-    
+
     char *newSN = UI::launchKeyboard(strdup("Enter your new SN. Cancel will write a ZERO SN!"), origSN, 14);
-    
+
     rBuffer = memalign(0x1000, 16);
-    
+
     if(newSN != NULL){
         memset((char*)rBuffer, 0, 16);
         memcpy((char*)rBuffer+2, newSN, 14);
@@ -219,7 +219,7 @@ bool JCFirm::changeSN(int padnum){
         memset((char*)rBuffer+5, 0x30, 11);
         hiddbgWriteSerialFlash(0x6000, rBuffer, 0x1000, 16, PadIds[padnum]);
     }
-    
+
     free(newSN);
     free(rBuffer);
     free(origSN);
@@ -235,19 +235,19 @@ bool JCFirm::restoreSN(int padnum){
     if(memcmp(rBuffer, "X", 1) != 0){
         return false;
     }
-    
+
     hiddbgReadSerialFlash(0xF000, rBuffer, 16, PadIds[padnum]);
     Result r = hiddbgWriteSerialFlash(0x6000, rBuffer, 0x1000, 16, PadIds[padnum]);
     if(!R_SUCCEEDED(r)){
         return false;
     }
-    
+
     memset(rBuffer, 0xFF, 16);
     r = hiddbgWriteSerialFlash(0xF000, rBuffer, 0x1000, 16, PadIds[padnum]);
     if(!R_SUCCEEDED(r)){
         return false;
     }
-    
+
     free(rBuffer);
     return true;
 }
@@ -260,14 +260,14 @@ bool JCFirm::backupSN(int padnum){
     hiddbgReadSerialFlash(0xF002, rBuffer, 14, PadIds[padnum]);
     if(memcmp(rBuffer, "X", 1) != 0){
         hiddbgReadSerialFlash(0x6000, rBuffer, 16, PadIds[padnum]);
-        
+
         Result r = hiddbgWriteSerialFlash(0xF000, rBuffer, 0x1000, 16, PadIds[padnum]);
         if(!R_SUCCEEDED(r)){
             free(rBuffer);
             return false;
         }
     }
-    
+
     free(rBuffer);
     return true;
 }

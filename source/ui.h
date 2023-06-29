@@ -9,9 +9,9 @@ class UI{
 public:
     UI(void);
     ~UI(void);
-    
+
     int pad = 0;
-    
+
     static void mainMenu(void);
     static void changeMenu(void);
     static void restoreMenu(void);
@@ -20,7 +20,7 @@ public:
     static void confirmWrite(int padnum, char *sFile);
     static char *launchKeyboard(char *header_str, char *init_str, int max_length);
 private:
-    
+
 protected:
-    
+
 };

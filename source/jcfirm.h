@@ -6,7 +6,7 @@ class JCFirm{
 public:
     JCFirm();
     ~JCFirm();
-    
+
     bool getUIDFromPads(void);
     bool dumpFirmwareFile(int padnum, char *sFile);
     int writeFirmwareFile(int padnum, char *sFile);
@@ -20,7 +20,7 @@ public:
     bool backupSN(int padnum);
     float getProgress(void);
     int getEntries(void);
-    
+
 protected:
     u64 PadIds[2];
     float progress;

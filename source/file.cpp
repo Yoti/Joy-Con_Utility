@@ -39,14 +39,14 @@ char **File::getFileList(void){
     }
     listOfDir = (char **)malloc(99 * sizeof(char*));
     fileListLength = 0;
-    
+
     struct dirent *curdir;
     DIR *dr = opendir(ldir);
-    
+
     if(dr == NULL){
         return NULL;
     }
-    
+
     while ((curdir = readdir(dr)) != NULL){
         if(strcmp(curdir->d_name, ".") == 0){
             continue;
@@ -57,35 +57,35 @@ char **File::getFileList(void){
         if(isDirectory(curdir->d_name)){
             continue;
         }
-        
+
         if(fileListLength == 99){
             break;
         }
-        
+
         if(curdir->d_name[0] == '.'){
             continue;
         }
-        
+
         int nameLength = strlen(curdir->d_name);
         if(nameLength > 50){
             continue;
         }
-        
+
         char *r = (char *)malloc(nameLength+1);
         char *filename = strtok(curdir->d_name, ".");
         char *fileext = strtok(NULL, ".");
-        
+
         if(strcmp(fileext, "bin") != 0){
             continue;
         }
-        
+
         sprintf(r, "%s.%s", filename, fileext);
-        
+
         listOfDir[fileListLength] = r;
         fileListLength++;
     }
     closedir(dr);
-    
+
     if(fileListLength == 0){
         char EMPTY[] = "EMPTY\0";
         char *r = (char *)malloc(strlen(EMPTY)+1);
@@ -93,7 +93,7 @@ char **File::getFileList(void){
         listOfDir[fileListLength] = r;
         fileListLength++;
     }
-    
+
     return listOfDir;
 }
 
@@ -107,20 +107,20 @@ char **File::getBackupFileList(void){
     }
     listOfDir = (char **)malloc(99 * sizeof(char*));
     fileListLength = 0;
-    
+
     struct dirent *curdir;
     DIR *dr = opendir(ldir);
-    
+
     if(dr == NULL){
         return NULL;
     }
     char NEW[] = "[NEW FILE]\0";
     char *p = (char *)malloc(strlen(NEW));
     strcpy(p, NEW);
-    
+
     listOfDir[fileListLength] = p;
     fileListLength++;
-    
+
     while ((curdir = readdir(dr)) != NULL){
         if(strcmp(curdir->d_name, ".") == 0){
             continue;
@@ -131,35 +131,35 @@ char **File::getBackupFileList(void){
         if(isDirectory(curdir->d_name)){
             continue;
         }
-        
+
         if(fileListLength == 99){
             break;
         }
-        
+
         if(curdir->d_name[0] == '.'){
             continue;
         }
-        
+
         int nameLength = strlen(curdir->d_name);
         if(nameLength > 50){
             continue;
         }
-        
+
         char *r = (char *)malloc(nameLength+1);
         char *filename = strtok(curdir->d_name, ".");
         char *fileext = strtok(NULL, ".");
-        
+
         if(strcmp(fileext, "bin") != 0){
             continue;
         }
-        
+
         sprintf(r, "%s.%s", filename, fileext);
-        
+
         listOfDir[fileListLength] = r;
         fileListLength++;
     }
     closedir(dr);
-    
+
     return listOfDir;
 }
 
@@ -199,16 +199,16 @@ size_t File::getFileSize(const char *file){
     if(strcmp(file, "[NEW FILE]") == 0){
         return 0;
     }
-    
+
     FILE *fd = fopen(file, "rb");
     if(fd == NULL){
         return -1;
     }
-    
+
     fseek(fd, 0, SEEK_END);
     size_t ret = ftell(fd);
     fseek(fd, 0, SEEK_SET);
     fclose(fd);
-    
+
     return ret;
 }

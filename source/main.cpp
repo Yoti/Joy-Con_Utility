@@ -7,9 +7,9 @@ int main(int argc, char **argv){
     consoleInit(NULL);
     hiddbgInitialize();
     hidsysInitialize();
-    
+
     AppletType at = appletGetAppletType();
-    
+
     if(at != AppletType_Application){
         printf("You're running that in Applet mode. Please run it as Application\nExiting in 4 Seconds...\n");
         consoleUpdate(NULL);
@@ -17,9 +17,9 @@ int main(int argc, char **argv){
         consoleExit(NULL);
         return 0;
     }
-    
+
     UI::mainMenu();
-    
+
     hiddbgExit();
     hidsysExit();
     consoleExit(NULL);

@@ -46,28 +46,28 @@ void UI::mainMenu(void){
     char origLeft[15];
     char origRight[15];
     bool isChanged = true;
-    
+
     joy.getSNFromPad(origLeft, origRight);
     while(appletMainLoop()){
         consoleClear();
-        
+
         if(isChanged){
             joy.getSNFromPad(origLeft, origRight);
             isChanged = false;
         }
-        
+
         if(hidGetHandheldMode() == false){
             printf("Not in Handheld mode. Plug in some Joy-Cons.\n");
             consoleUpdate(NULL);
             svcSleepThread(4*1000000000ull); //Wait 4 Seconds and exit
             break;
         }
-        
+
         printf("Welcome to the Joy-Con Utility\nThis application doesn't have any fancy gfx\n\n");
         printf("Left Joy-Con: %s\n", origLeft);
         printf("Right Joy-Con: %s\n\n", origRight);
         printf("Main menu: \n\n");
-        
+
         for(int i=0;i<listEntries;i++){
             if(curPos != i){
                 printf("    %s\n", ulist[i].menuList);
@@ -76,7 +76,7 @@ void UI::mainMenu(void){
                 printf("\x1B[35m--> %s\x1B[0m\n", ulist[i].menuList);
             }
         }
-        
+
         for(int i=0;i<30-listEntries;i++){
             printf("\n");
         }
@@ -85,15 +85,15 @@ void UI::mainMenu(void){
             printf("*");
         }
         printf("\x1B[0m\n\n");
-        
+
         if(ulist[curPos].definition != NULL){
             printf("%s\n", ulist[curPos].definition);
         }
-        
+
         hidScanInput();
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
-        
+
         if(debounce){
             if(kUp & KEY_UP){
                 debounce=0;
@@ -102,7 +102,7 @@ void UI::mainMenu(void){
                 debounce=0;
             }
         }
-        
+
         if(kDown & KEY_UP){
             if(debounce==0){
                 debounce=1;
@@ -114,7 +114,7 @@ void UI::mainMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_DOWN){
             if(debounce==0){
                 debounce = 1;
@@ -125,7 +125,7 @@ void UI::mainMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_A){
             if(strcmp(ulist[curPos].menuList, "Exit") == 0){
                 break;
@@ -133,15 +133,15 @@ void UI::mainMenu(void){
             ulist[curPos].entry();
             isChanged = true;
         }
-        
+
         if(kDown & KEY_B){
             break;
         }
-        
+
         if(kDown & KEY_PLUS){
             break;
         }
-        
+
         consoleUpdate(NULL);
     }
 }
@@ -156,7 +156,7 @@ void UI::changeMenu(void){
         printf("Press [A] to Select - [B] to exit\n");
         printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
-        
+
         for(int i=0;i<clistEntries;i++){
             if(curPos != i){
                 printf("    %s\n", clist[i].menuList);
@@ -165,11 +165,11 @@ void UI::changeMenu(void){
                 printf("\x1B[35m--> %s\x1B[0m\n", clist[i].menuList);
             }
         }
-        
+
         hidScanInput();
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
-        
+
         if(debounce){
             if(kUp & KEY_UP){
                 debounce=0;
@@ -178,7 +178,7 @@ void UI::changeMenu(void){
                 debounce=0;
             }
         }
-        
+
         if(kDown & KEY_UP){
             if(debounce==0){
                 debounce=1;
@@ -190,7 +190,7 @@ void UI::changeMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_DOWN){
             if(debounce==0){
                 debounce = 1;
@@ -201,15 +201,15 @@ void UI::changeMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_L){
             pad=0;
         }
-        
+
         if(kDown & KEY_R){
             pad=1;
         }
-        
+
         if(kDown & KEY_A){
             if(strcmp(clist[curPos].menuList, "Change SN") == 0){
                 JCFirm joy;
@@ -230,15 +230,15 @@ void UI::changeMenu(void){
             }
             clist[curPos].entry();
         }
-        
+
         if(kDown & KEY_B){
             break;
         }
-        
+
         if(kDown & KEY_PLUS){
             break;
         }
-        
+
         consoleUpdate(NULL);
     }
 }
@@ -261,11 +261,11 @@ void UI::restoreMenu(void){
                 printf("\x1B[35m--> %s\x1B[0m\n", rlist[i].menuList);
             }
         }
-        
+
         hidScanInput();
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
-        
+
         if(debounce){
             if(kUp & KEY_UP){
                 debounce=0;
@@ -274,7 +274,7 @@ void UI::restoreMenu(void){
                 debounce=0;
             }
         }
-        
+
         if(kDown & KEY_UP){
             if(debounce==0){
                 debounce=1;
@@ -286,7 +286,7 @@ void UI::restoreMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_DOWN){
             if(debounce==0){
                 debounce = 1;
@@ -297,15 +297,15 @@ void UI::restoreMenu(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_L){
             pad=0;
         }
-        
+
         if(kDown & KEY_R){
             pad=1;
         }
-        
+
         if(kDown & KEY_A){
             if(strcmp(rlist[curPos].menuList, "Restore SN") == 0){
                 JCFirm joy;
@@ -326,15 +326,15 @@ void UI::restoreMenu(void){
             }
             clist[curPos].entry();
         }
-        
+
         if(kDown & KEY_B){
             break;
         }
-        
+
         if(kDown & KEY_PLUS){
             break;
         }
-        
+
         consoleUpdate(NULL);
     }
 }
@@ -359,12 +359,12 @@ void UI::restoreListFiles(void){
             }
         }
         consoleUpdate(NULL);
-        
+
         hidScanInput();
-        
+
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
-        
+
         if(debounce){
             if(kUp & KEY_UP){
                 debounce=0;
@@ -373,7 +373,7 @@ void UI::restoreListFiles(void){
                 debounce=0;
             }
         }
-        
+
         if(kDown & KEY_UP){
             if(debounce==0){
                 debounce=1;
@@ -385,7 +385,7 @@ void UI::restoreListFiles(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_DOWN){
             if(debounce==0){
                 debounce = 1;
@@ -396,22 +396,22 @@ void UI::restoreListFiles(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_L){
             pad=0;
         }
-        
+
         if(kDown & KEY_R){
             pad=1;
         }
-        
+
         if(kDown & KEY_A){
             if(strcmp(list[curPos], "EMPTY") != 0){
                 UI::confirmWrite(pad, list[curPos]);
                 svcSleepThread(3*1000000000ull);
             }
         }
-        
+
         if(kDown & KEY_B){
             break;
         }
@@ -449,12 +449,12 @@ void UI::backupListFiles(void){
             }
         }
         consoleUpdate(NULL);
-        
+
         hidScanInput();
-        
+
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
-        
+
         if(debounce){
             if(kUp & KEY_UP){
                 debounce=0;
@@ -463,7 +463,7 @@ void UI::backupListFiles(void){
                 debounce=0;
             }
         }
-        
+
         if(kDown & KEY_UP){
             if(debounce==0){
                 debounce=1;
@@ -475,7 +475,7 @@ void UI::backupListFiles(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_DOWN){
             if(debounce==0){
                 debounce = 1;
@@ -486,15 +486,15 @@ void UI::backupListFiles(void){
                 }
             }
         }
-        
+
         if(kDown & KEY_L){
             pad=0;
         }
-        
+
         if(kDown & KEY_R){
             pad=1;
         }
-        
+
         if(kDown & KEY_A){
             JCFirm *reader = new JCFirm();
             if(strcmp(list[curPos], "[NEW FILE]") == 0){
@@ -507,7 +507,7 @@ void UI::backupListFiles(void){
             delete reader;
             svcSleepThread(3*1000000000ull);
         }
-        
+
         if(kDown & KEY_B){
             break;
         }
@@ -522,9 +522,9 @@ void UI::confirmWrite(int padnum, char *sFile){
     consoleUpdate(NULL);
     while(1){
         hidScanInput();
-        
+
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        
+
         if(kDown & KEY_Y){
             printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOY-CON!\n");
             printf("DO NOT UNPLUG ANY JOY-CON IN FLASHING STATE!\n");
@@ -535,9 +535,9 @@ void UI::confirmWrite(int padnum, char *sFile){
             consoleUpdate(NULL);
             while(1){
                 hidScanInput();
-                
+
                 u64 nDown = hidKeysDown(CONTROLLER_P1_AUTO);
-                
+
                 if(nDown & KEY_ZR){
                     appletBeginBlockingHomeButtonShortAndLongPressed(0);
                     JCFirm *writer = new JCFirm();
@@ -594,16 +594,15 @@ char *UI::launchKeyboard(char *header_str, char *init_str, int max_length){
         swkbdConfigSetHeaderText(&kbd, header_str);
         swkbdConfigSetInitialText(&kbd, init_str);
         swkbdConfigSetStringLenMax(&kbd, max_length);
-        
+
         char *ret = (char *)malloc(max_length+1);
-        
+
         r = swkbdShow(&kbd, (char *)ret, max_length+1);
         if(R_SUCCEEDED(r)){
             return ret;
         }
         free(ret);
     }
-    
+
     return NULL;
 }
-
