@@ -16,7 +16,7 @@ JCFirm::~JCFirm(){
 bool JCFirm::getUIDFromPads(void){
     Result pads;
 
-    pads = hidsysGetUniquePadsFromNpad(CONTROLLER_HANDHELD, PadIds, 2, &entries);
+    pads = hidsysGetUniquePadsFromNpad(HidNpadIdType_Handheld, PadIds, 2, &entries);
     if(entries != 2){
         return false;
     }
@@ -31,6 +31,8 @@ bool JCFirm::getUIDFromPads(void){
 }
 
 bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
+    PadState keys;
+    padInitializeDefault(&keys);
     printf("\nDumping..\n");
     printf("Press [B] to cancel\n");
 
@@ -40,8 +42,8 @@ bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
     }
 
     for(int i=0;i<0x400;i++){
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+        padUpdate(&keys);
+        u64 kDown = padGetButtonsDown(&keys);
 
         hiddbgReadSerialFlash(i*0x200, firmBuffer, 0x200, PadIds[padnum]);
         fwrite(firmBuffer, 1, 0x200, fd);

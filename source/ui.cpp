@@ -40,6 +40,8 @@ menuEntry rlist[] = {
 int rlistEntries = 2;
 
 void UI::mainMenu(void){
+    PadState keys;
+    padInitializeDefault(&keys);
     int debounce = 0;
     int curPos = 0;
     JCFirm joy;
@@ -90,9 +92,9 @@ void UI::mainMenu(void){
             printf("%s\n", ulist[curPos].definition);
         }
 
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
+        padUpdate(&keys);
+        u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(debounce){
             if(kUp & HidNpadButton_Up){
@@ -147,6 +149,8 @@ void UI::mainMenu(void){
 }
 
 void UI::changeMenu(void){
+    PadState keys;
+    padInitializeDefault(&keys);
     int debounce = 0;
     int curPos = 0;
     int pad = 0;
@@ -166,9 +170,9 @@ void UI::changeMenu(void){
             }
         }
 
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
+        padUpdate(&keys);
+        u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(debounce){
             if(kUp & HidNpadButton_Up){
@@ -244,6 +248,8 @@ void UI::changeMenu(void){
 }
 
 void UI::restoreMenu(void){
+    PadState keys;
+    padInitializeDefault(&keys);
     int debounce = 0;
     int curPos = 0;
     int pad = 0;
@@ -262,9 +268,9 @@ void UI::restoreMenu(void){
             }
         }
 
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
+        padUpdate(&keys);
+        u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(debounce){
             if(kUp & HidNpadButton_Up){
@@ -340,6 +346,8 @@ void UI::restoreMenu(void){
 }
 
 void UI::restoreListFiles(void){
+    PadState keys;
+    padInitializeDefault(&keys);
     File *dfile = new File(strdup("."));
     char **list = dfile->getFileList();
     int listLength = dfile->getFileListLength();
@@ -360,10 +368,10 @@ void UI::restoreListFiles(void){
         }
         consoleUpdate(NULL);
 
-        hidScanInput();
+        padUpdate(&keys);
 
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
+        u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(debounce){
             if(kUp & HidNpadButton_Up){
@@ -420,6 +428,8 @@ void UI::restoreListFiles(void){
 }
 
 void UI::backupListFiles(void){
+    PadState keys;
+    padInitializeDefault(&keys);
     File *dfile = new File(strdup("."));
     char **list = dfile->getBackupFileList();
     int listLength = dfile->getFileListLength();
@@ -450,10 +460,10 @@ void UI::backupListFiles(void){
         }
         consoleUpdate(NULL);
 
-        hidScanInput();
+        padUpdate(&keys);
 
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-        u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
+        u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(debounce){
             if(kUp & HidNpadButton_Up){
@@ -516,14 +526,16 @@ void UI::backupListFiles(void){
 }
 
 void UI::confirmWrite(int padnum, char *sFile){
+    PadState keys;
+    padInitializeDefault(&keys);
     consoleClear();
     printf("Are you sure to flash the Backup to your Joy-Con?\n");
     printf("Press [Y] to continue, [B] to exit\n\n");
     consoleUpdate(NULL);
     while(1){
-        hidScanInput();
+        padUpdate(&keys);
 
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+        u64 kDown = padGetButtonsDown(&keys);
 
         if(kDown & HidNpadButton_Y){
             printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOY-CON!\n");
@@ -534,9 +546,9 @@ void UI::confirmWrite(int padnum, char *sFile){
             printf("Press [ZR] to continue, [B] to exit\n\n");
             consoleUpdate(NULL);
             while(1){
-                hidScanInput();
+                padUpdate(&keys);
 
-                u64 nDown = hidKeysDown(CONTROLLER_P1_AUTO);
+                u64 nDown = padGetButtonsDown(&keys);
 
                 if(nDown & HidNpadButton_ZR){
                     appletBeginBlockingHomeButtonShortAndLongPressed(0);
