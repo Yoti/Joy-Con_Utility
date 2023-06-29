@@ -49,7 +49,7 @@ bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
         progress = (float) (i+1) / 0x400 * 100;
         printf("Progress: %.1f%%\r", progress);
         consoleUpdate(NULL);
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             printf("\nUSER CANCELED\n");
             break;
         }

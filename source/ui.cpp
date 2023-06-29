@@ -95,15 +95,15 @@ void UI::mainMenu(void){
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
 
         if(debounce){
-            if(kUp & KEY_UP){
+            if(kUp & HidNpadButton_Up){
                 debounce=0;
             }
-            if(kUp & KEY_DOWN){
+            if(kUp & HidNpadButton_Down){
                 debounce=0;
             }
         }
 
-        if(kDown & KEY_UP){
+        if(kDown & HidNpadButton_Up){
             if(debounce==0){
                 debounce=1;
                 if(curPos == 0){
@@ -115,7 +115,7 @@ void UI::mainMenu(void){
             }
         }
 
-        if(kDown & KEY_DOWN){
+        if(kDown & HidNpadButton_Down){
             if(debounce==0){
                 debounce = 1;
                 if(curPos == listEntries-1){
@@ -126,7 +126,7 @@ void UI::mainMenu(void){
             }
         }
 
-        if(kDown & KEY_A){
+        if(kDown & HidNpadButton_A){
             if(strcmp(ulist[curPos].menuList, "Exit") == 0){
                 break;
             }
@@ -134,11 +134,11 @@ void UI::mainMenu(void){
             isChanged = true;
         }
 
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             break;
         }
 
-        if(kDown & KEY_PLUS){
+        if(kDown & HidNpadButton_Plus){
             break;
         }
 
@@ -171,15 +171,15 @@ void UI::changeMenu(void){
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
 
         if(debounce){
-            if(kUp & KEY_UP){
+            if(kUp & HidNpadButton_Up){
                 debounce=0;
             }
-            if(kUp & KEY_DOWN){
+            if(kUp & HidNpadButton_Down){
                 debounce=0;
             }
         }
 
-        if(kDown & KEY_UP){
+        if(kDown & HidNpadButton_Up){
             if(debounce==0){
                 debounce=1;
                 if(curPos == 0){
@@ -191,7 +191,7 @@ void UI::changeMenu(void){
             }
         }
 
-        if(kDown & KEY_DOWN){
+        if(kDown & HidNpadButton_Down){
             if(debounce==0){
                 debounce = 1;
                 if(curPos == clistEntries-1){
@@ -202,15 +202,15 @@ void UI::changeMenu(void){
             }
         }
 
-        if(kDown & KEY_L){
+        if(kDown & HidNpadButton_L){
             pad=0;
         }
 
-        if(kDown & KEY_R){
+        if(kDown & HidNpadButton_R){
             pad=1;
         }
 
-        if(kDown & KEY_A){
+        if(kDown & HidNpadButton_A){
             if(strcmp(clist[curPos].menuList, "Change SN") == 0){
                 JCFirm joy;
                 if(joy.changeSN(pad)){
@@ -231,11 +231,11 @@ void UI::changeMenu(void){
             clist[curPos].entry();
         }
 
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             break;
         }
 
-        if(kDown & KEY_PLUS){
+        if(kDown & HidNpadButton_Plus){
             break;
         }
 
@@ -267,15 +267,15 @@ void UI::restoreMenu(void){
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
 
         if(debounce){
-            if(kUp & KEY_UP){
+            if(kUp & HidNpadButton_Up){
                 debounce=0;
             }
-            if(kUp & KEY_DOWN){
+            if(kUp & HidNpadButton_Down){
                 debounce=0;
             }
         }
 
-        if(kDown & KEY_UP){
+        if(kDown & HidNpadButton_Up){
             if(debounce==0){
                 debounce=1;
                 if(curPos == 0){
@@ -287,7 +287,7 @@ void UI::restoreMenu(void){
             }
         }
 
-        if(kDown & KEY_DOWN){
+        if(kDown & HidNpadButton_Down){
             if(debounce==0){
                 debounce = 1;
                 if(curPos == rlistEntries-1){
@@ -298,15 +298,15 @@ void UI::restoreMenu(void){
             }
         }
 
-        if(kDown & KEY_L){
+        if(kDown & HidNpadButton_L){
             pad=0;
         }
 
-        if(kDown & KEY_R){
+        if(kDown & HidNpadButton_R){
             pad=1;
         }
 
-        if(kDown & KEY_A){
+        if(kDown & HidNpadButton_A){
             if(strcmp(rlist[curPos].menuList, "Restore SN") == 0){
                 JCFirm joy;
                 if(joy.restoreSN(pad)){
@@ -327,11 +327,11 @@ void UI::restoreMenu(void){
             clist[curPos].entry();
         }
 
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             break;
         }
 
-        if(kDown & KEY_PLUS){
+        if(kDown & HidNpadButton_Plus){
             break;
         }
 
@@ -366,15 +366,15 @@ void UI::restoreListFiles(void){
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
 
         if(debounce){
-            if(kUp & KEY_UP){
+            if(kUp & HidNpadButton_Up){
                 debounce=0;
             }
-            if(kUp & KEY_DOWN){
+            if(kUp & HidNpadButton_Down){
                 debounce=0;
             }
         }
 
-        if(kDown & KEY_UP){
+        if(kDown & HidNpadButton_Up){
             if(debounce==0){
                 debounce=1;
                 if(curPos == 0){
@@ -386,7 +386,7 @@ void UI::restoreListFiles(void){
             }
         }
 
-        if(kDown & KEY_DOWN){
+        if(kDown & HidNpadButton_Down){
             if(debounce==0){
                 debounce = 1;
                 if(curPos == listLength-1){
@@ -397,22 +397,22 @@ void UI::restoreListFiles(void){
             }
         }
 
-        if(kDown & KEY_L){
+        if(kDown & HidNpadButton_L){
             pad=0;
         }
 
-        if(kDown & KEY_R){
+        if(kDown & HidNpadButton_R){
             pad=1;
         }
 
-        if(kDown & KEY_A){
+        if(kDown & HidNpadButton_A){
             if(strcmp(list[curPos], "EMPTY") != 0){
                 UI::confirmWrite(pad, list[curPos]);
                 svcSleepThread(3*1000000000ull);
             }
         }
 
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             break;
         }
     }
@@ -456,15 +456,15 @@ void UI::backupListFiles(void){
         u64 kUp = hidKeysUp(CONTROLLER_P1_AUTO);
 
         if(debounce){
-            if(kUp & KEY_UP){
+            if(kUp & HidNpadButton_Up){
                 debounce=0;
             }
-            if(kUp & KEY_DOWN){
+            if(kUp & HidNpadButton_Down){
                 debounce=0;
             }
         }
 
-        if(kDown & KEY_UP){
+        if(kDown & HidNpadButton_Up){
             if(debounce==0){
                 debounce=1;
                 if(curPos == 0){
@@ -476,7 +476,7 @@ void UI::backupListFiles(void){
             }
         }
 
-        if(kDown & KEY_DOWN){
+        if(kDown & HidNpadButton_Down){
             if(debounce==0){
                 debounce = 1;
                 if(curPos == listLength-1){
@@ -487,15 +487,15 @@ void UI::backupListFiles(void){
             }
         }
 
-        if(kDown & KEY_L){
+        if(kDown & HidNpadButton_L){
             pad=0;
         }
 
-        if(kDown & KEY_R){
+        if(kDown & HidNpadButton_R){
             pad=1;
         }
 
-        if(kDown & KEY_A){
+        if(kDown & HidNpadButton_A){
             JCFirm *reader = new JCFirm();
             if(strcmp(list[curPos], "[NEW FILE]") == 0){
                 char *file = launchKeyboard(strdup("Enter new Filename:"), strdup(""), 20);
@@ -508,7 +508,7 @@ void UI::backupListFiles(void){
             svcSleepThread(3*1000000000ull);
         }
 
-        if(kDown & KEY_B){
+        if(kDown & HidNpadButton_B){
             break;
         }
     }
@@ -525,7 +525,7 @@ void UI::confirmWrite(int padnum, char *sFile){
 
         u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-        if(kDown & KEY_Y){
+        if(kDown & HidNpadButton_Y){
             printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOY-CON!\n");
             printf("DO NOT UNPLUG ANY JOY-CON IN FLASHING STATE!\n");
             printf("USING A WRONG FIRMWARE FOR THE WRONG JOY-CON WILL BRICK YOUR JOY-CON!\n");
@@ -538,7 +538,7 @@ void UI::confirmWrite(int padnum, char *sFile){
 
                 u64 nDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
-                if(nDown & KEY_ZR){
+                if(nDown & HidNpadButton_ZR){
                     appletBeginBlockingHomeButtonShortAndLongPressed(0);
                     JCFirm *writer = new JCFirm();
                     int ret = writer->writeFirmwareFile(padnum, sFile);
@@ -569,7 +569,7 @@ void UI::confirmWrite(int padnum, char *sFile){
                     }
                     break;
                 }
-                else if(nDown & KEY_B)
+                else if(nDown & HidNpadButton_B)
                 {
                     printf("\x1B[0mCANCELED!\n");
                     consoleUpdate(NULL);
@@ -578,7 +578,7 @@ void UI::confirmWrite(int padnum, char *sFile){
             }
             break;
         }
-        else if(kDown & KEY_B){
+        else if(kDown & HidNpadButton_B){
             printf("CANCELED!\n");
             consoleUpdate(NULL);
             break;

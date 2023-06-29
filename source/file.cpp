@@ -115,7 +115,7 @@ char **File::getBackupFileList(void){
         return NULL;
     }
     char NEW[] = "[NEW FILE]\0";
-    char *p = (char *)malloc(strlen(NEW));
+    char *p = (char *)malloc(strlen(NEW)+1);
     strcpy(p, NEW);
 
     listOfDir[fileListLength] = p;
