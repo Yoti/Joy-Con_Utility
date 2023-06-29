@@ -57,14 +57,14 @@ void UI::mainMenu(void){
             joy.getSNFromPad(origLeft, origRight);
             isChanged = false;
         }
-
+/*
         if(hidGetHandheldMode() == false){
             printf("Not in Handheld mode. Plug in some Joy-Cons.\n");
             consoleUpdate(NULL);
             svcSleepThread(4*1000000000ull); //Wait 4 Seconds and exit
             break;
         }
-
+*/
         printf("Welcome to the Joy-Con Utility\nThis application doesn't have any fancy gfx\n\n");
         printf("Left Joy-Con: %s\n", origLeft);
         printf("Right Joy-Con: %s\n\n", origRight);

@@ -18,6 +18,7 @@ int main(int argc, char **argv){
         return 0;
     }
 
+    padConfigureInput(1, HidNpadStyleSet_NpadStandard);
     UI::mainMenu();
 
     hiddbgExit();
