@@ -22,7 +22,7 @@ public:
     int getEntries(void);
 
 protected:
-    u64 PadIds[2];
+    HidsysUniquePadId PadIds[2];
     float progress;
     FILE *fd;
     void *firmBuffer;
