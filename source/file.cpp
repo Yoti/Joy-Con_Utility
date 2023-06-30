@@ -62,12 +62,16 @@ char **File::getFileList(void){
             break;
         }
 
-        if(curdir->d_name[0] == '.'){
+        if(curdir->d_name[0] == '.'){ // duplicate check?
             continue;
         }
 
         int nameLength = strlen(curdir->d_name);
         if(nameLength > 50){
+            continue;
+        }
+
+        if(strchr(curdir->d_name, '.') == NULL){
             continue;
         }
 
@@ -136,7 +140,7 @@ char **File::getBackupFileList(void){
             break;
         }
 
-        if(curdir->d_name[0] == '.'){
+        if(curdir->d_name[0] == '.'){ // duplicate check?
             continue;
         }
 
