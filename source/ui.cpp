@@ -156,7 +156,7 @@ void UI::changeMenu(void){
     int pad = 0;
     while(appletMainLoop()){
         consoleClear();
-        printf("Change SN - Here you can change your Serial Number: \n\n");
+        printf("Change SN - here you can change your Serial Number: \n\n");
         printf("Press [A] to select - [B] to exit\n");
         printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
@@ -255,7 +255,7 @@ void UI::restoreMenu(void){
     int pad = 0;
     while(appletMainLoop()){
         consoleClear();
-        printf("Restore SN - Here you can restore your Serial Number: \n\n");
+        printf("Restore SN - here you can restore your Serial Number: \n\n");
         printf("Press [A] to select - [B] to exit\n");
         printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
@@ -356,7 +356,7 @@ void UI::restoreListFiles(void){
     int pad = 0;
     while(1){
         consoleClear();
-        printf("Select a file to Restore.\n\nPress [A] to select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Select a file to restore.\n\nPress [A] to select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
