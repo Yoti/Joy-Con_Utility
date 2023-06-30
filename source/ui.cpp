@@ -157,7 +157,7 @@ void UI::changeMenu(void){
     while(appletMainLoop()){
         consoleClear();
         printf("Change SN - Here you can change your Serial Number: \n\n");
-        printf("Press [A] to Select - [B] to exit\n");
+        printf("Press [A] to select - [B] to exit\n");
         printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
 
@@ -256,7 +256,7 @@ void UI::restoreMenu(void){
     while(appletMainLoop()){
         consoleClear();
         printf("Restore SN - Here you can restore your Serial Number: \n\n");
-        printf("Press [A] to Select - [B] to exit\n");
+        printf("Press [A] to select - [B] to exit\n");
         printf("[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<rlistEntries;i++){
@@ -356,7 +356,7 @@ void UI::restoreListFiles(void){
     int pad = 0;
     while(1){
         consoleClear();
-        printf("Select a file to Restore.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Select a file to Restore.\n\nPress [A] to select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
@@ -438,7 +438,7 @@ void UI::backupListFiles(void){
     int pad = 0;
     while(1){
         consoleClear();
-        printf("Select a file to Backup.\n\nPress [A] to Select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
+        printf("Select a file to backup.\n\nPress [A] to select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
@@ -531,7 +531,7 @@ void UI::confirmWrite(int padnum, char *sFile){
     PadState keys;
     padInitializeDefault(&keys);
     consoleClear();
-    printf("Are you sure to flash the Backup to your Joy-Con?\n");
+    printf("Are you sure to flash the backup to your Joy-Con?\n");
     printf("Press [Y] to continue, [B] to exit\n\n");
     consoleUpdate(NULL);
     while(1){
