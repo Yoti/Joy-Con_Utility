@@ -40,6 +40,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 APP_TITLE := Joy-Con Utility
 APP_AUTHOR := dx3m & Yoti
+APP_VERSION := 1.0.1
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build

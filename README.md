@@ -1,4 +1,4 @@
 # Joy-Con Utility
-<p align="center"><img src="https://github.com/dx4m/Joycon-Utility/blob/master/screenshot.jpg?raw=true"><br />
+![screenshot.jpg](screenshot.jpg?raw=true "screenshot.jpg")
 
 Use at your own risk.
