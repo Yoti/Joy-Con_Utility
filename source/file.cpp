@@ -145,6 +145,10 @@ char **File::getBackupFileList(void){
             continue;
         }
 
+        if(strchr(curdir->d_name, '.') == NULL){
+            continue;
+        }
+
         char *r = (char *)malloc(nameLength+1);
         char *filename = strtok(curdir->d_name, ".");
         char *fileext = strtok(NULL, ".");
