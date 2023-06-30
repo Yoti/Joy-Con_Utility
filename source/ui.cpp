@@ -128,7 +128,7 @@ void UI::mainMenu(void){
             }
         }
 
-        if(kDown & HidNpadButton_A){
+        if(kUp & HidNpadButton_A){
             if(strcmp(ulist[curPos].menuList, "Exit") == 0){
                 break;
             }
@@ -136,7 +136,7 @@ void UI::mainMenu(void){
             isChanged = true;
         }
 
-        if(kDown & HidNpadButton_B){
+        if(kUp & HidNpadButton_B){
             break;
         }
 
@@ -214,7 +214,7 @@ void UI::changeMenu(void){
             pad=1;
         }
 
-        if(kDown & HidNpadButton_A){
+        if(kUp & HidNpadButton_A){
             if(strcmp(clist[curPos].menuList, "Change SN") == 0){
                 JCFirm joy;
                 if(joy.changeSN(pad)){
@@ -235,7 +235,7 @@ void UI::changeMenu(void){
             clist[curPos].entry();
         }
 
-        if(kDown & HidNpadButton_B){
+        if(kUp & HidNpadButton_B){
             break;
         }
 
@@ -312,7 +312,7 @@ void UI::restoreMenu(void){
             pad=1;
         }
 
-        if(kDown & HidNpadButton_A){
+        if(kUp & HidNpadButton_A){
             if(strcmp(rlist[curPos].menuList, "Restore SN") == 0){
                 JCFirm joy;
                 if(joy.restoreSN(pad)){
@@ -333,7 +333,7 @@ void UI::restoreMenu(void){
             clist[curPos].entry();
         }
 
-        if(kDown & HidNpadButton_B){
+        if(kUp & HidNpadButton_B){
             break;
         }
 
@@ -413,14 +413,14 @@ void UI::restoreListFiles(void){
             pad=1;
         }
 
-        if(kDown & HidNpadButton_A){
+        if(kUp & HidNpadButton_A){
             if(strcmp(list[curPos], "EMPTY") != 0){
                 UI::confirmWrite(pad, list[curPos]);
                 svcSleepThread(3*1000000000ull);
             }
         }
 
-        if(kDown & HidNpadButton_B){
+        if(kUp & HidNpadButton_B){
             break;
         }
     }
@@ -505,7 +505,7 @@ void UI::backupListFiles(void){
             pad=1;
         }
 
-        if(kDown & HidNpadButton_A){
+        if(kUp & HidNpadButton_A){
             JCFirm *reader = new JCFirm();
             if(strcmp(list[curPos], "[NEW FILE]") == 0){
                 char *file = launchKeyboard(strdup("Enter new filename with bin extension:"), strdup(""), 32);
@@ -520,7 +520,7 @@ void UI::backupListFiles(void){
             svcSleepThread(3*1000000000ull);
         }
 
-        if(kDown & HidNpadButton_B){
+        if(kUp & HidNpadButton_B){
             break;
         }
     }
@@ -538,6 +538,7 @@ void UI::confirmWrite(int padnum, char *sFile){
         padUpdate(&keys);
 
         u64 kDown = padGetButtonsDown(&keys);
+        u64 kUp = padGetButtonsUp(&keys);
 
         if(kDown & HidNpadButton_Y){
             printf("\x1B[31mIT MAY PERMANENTLY DAMAGE YOUR JOY-CON!\n");
@@ -551,6 +552,7 @@ void UI::confirmWrite(int padnum, char *sFile){
                 padUpdate(&keys);
 
                 u64 nDown = padGetButtonsDown(&keys);
+                u64 kUp = padGetButtonsUp(&keys);
 
                 if(nDown & HidNpadButton_ZR){
                     appletBeginBlockingHomeButtonShortAndLongPressed(0);
@@ -583,7 +585,7 @@ void UI::confirmWrite(int padnum, char *sFile){
                     }
                     break;
                 }
-                else if(nDown & HidNpadButton_B)
+                else if(kUp & HidNpadButton_B)
                 {
                     printf("\x1B[0mCANCELED!\n");
                     consoleUpdate(NULL);
@@ -592,7 +594,7 @@ void UI::confirmWrite(int padnum, char *sFile){
             }
             break;
         }
-        else if(kDown & HidNpadButton_B){
+        else if(kUp & HidNpadButton_B){
             printf("CANCELED!\n");
             consoleUpdate(NULL);
             break;
