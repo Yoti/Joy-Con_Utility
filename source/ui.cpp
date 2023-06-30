@@ -436,6 +436,11 @@ void UI::backupListFiles(void){
     int curPos = 0;
     int debounce = 0;
     int pad = 0;
+    JCFirm joy;
+    char origLeft[15];
+    char origRight[15];
+
+    joy.getSNFromPad(origLeft, origRight);
     while(1){
         consoleClear();
         printf("Select a file to backup.\n\nPress [A] to select - [B] to exit \n[L] to select LEFT Joy-Con - [R] to select RIGHT Joy-Con\n");
@@ -508,7 +513,11 @@ void UI::backupListFiles(void){
         if(kUp & HidNpadButton_A){
             JCFirm *reader = new JCFirm();
             if(strcmp(list[curPos], "[NEW FILE]") == 0){
-                char *file = launchKeyboard(strdup("Enter new filename with bin extension:"), strdup(""), 32);
+                char *file;
+                if(pad)
+                     file = launchKeyboard(strdup("Enter new filename with bin extension:"), origRight, 32);
+                else
+                     file = launchKeyboard(strdup("Enter new filename with bin extension:"), origLeft, 32);
                 if(file != NULL){
                     reader->dumpFirmwareFile(pad, file);
                 }
