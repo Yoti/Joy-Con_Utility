@@ -508,8 +508,10 @@ void UI::backupListFiles(void){
         if(kDown & HidNpadButton_A){
             JCFirm *reader = new JCFirm();
             if(strcmp(list[curPos], "[NEW FILE]") == 0){
-                char *file = launchKeyboard(strdup("Enter new Filename:"), strdup(""), 20);
-                reader->dumpFirmwareFile(pad, file);
+                char *file = launchKeyboard(strdup("Enter new filename with bin extension:"), strdup(""), 32);
+                if(file != NULL){
+                    reader->dumpFirmwareFile(pad, file);
+                }
                 free(file);
             }else{
                 reader->dumpFirmwareFile(pad, list[curPos]);
