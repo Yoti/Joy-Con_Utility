@@ -33,7 +33,7 @@ bool JCFirm::getUIDFromPads(void){
 bool JCFirm::dumpFirmwareFile(int padnum, char *sFile){
     PadState keys;
     padInitializeDefault(&keys);
-    printf("\nDumping..\n");
+    printf("\nDumping...\n");
     printf("Press [B] to cancel\n");
 
     fd = fopen(sFile, "wb");

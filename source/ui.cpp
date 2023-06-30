@@ -360,10 +360,10 @@ void UI::restoreListFiles(void){
         printf("Selected Joy-Con: \x1B[32m%s Joy-Con\x1B[0m\n\n", pad ? "RIGHT" : "LEFT");
         for(int i=0;i<listLength;i++){
             if(curPos != i){
-                printf("    %-50s\tSize: %liBytes\n", list[i], dfile->getFileSize(list[i]));
+                printf("    %-50s\tSize: %li Bytes\n", list[i], dfile->getFileSize(list[i]));
             }
             else{
-                printf("\x1B[35m--> %-50s\tSize: %liBytes\x1B[0m\n", list[i], dfile->getFileSize(list[i]));
+                printf("\x1B[35m--> %-50s\tSize: %li Bytes\x1B[0m\n", list[i], dfile->getFileSize(list[i]));
             }
         }
         consoleUpdate(NULL);
@@ -446,7 +446,7 @@ void UI::backupListFiles(void){
                     printf("    %-50s\n", list[i]);
                 }
                 else{
-                    printf("    %-50s\tSize: %liBytes\n", list[i], dfile->getFileSize(list[i]));
+                    printf("    %-50s\tSize: %li Bytes\n", list[i], dfile->getFileSize(list[i]));
                 }
             }
             else{
@@ -454,7 +454,7 @@ void UI::backupListFiles(void){
                     printf("\x1B[35m--> %-50s\x1B[0m\n", list[i]);
                 }
                 else{
-                    printf("\x1B[35m--> %-50s\tSize: %liBytes\x1B[0m\n", list[i], dfile->getFileSize(list[i]));
+                    printf("\x1B[35m--> %-50s\tSize: %li Bytes\x1B[0m\n", list[i], dfile->getFileSize(list[i]));
                 }
             }
         }
