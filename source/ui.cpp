@@ -39,24 +39,18 @@ menuEntry rlist[] = {
 };
 int rlistEntries = 2;
 
-void UI::mainMenu(void){
+void UI::mainMenu(void) {
+    JCFirm joy;
     PadState keys;
     padInitializeDefault(&keys);
-    int debounce = 0;
     int curPos = 0;
-    JCFirm joy;
     char origLeft[15];
     char origRight[15];
-    bool isChanged = true;
 
-    joy.getSNFromPad(origLeft, origRight);
-    while(appletMainLoop()){
+    while(appletMainLoop()) {
         consoleClear();
 
-        if(isChanged){
-            joy.getSNFromPad(origLeft, origRight);
-            isChanged = false;
-        }
+        joy.getSNFromPad(origLeft, origRight);
 /*
         if(hidGetHandheldMode() == false){
             printf("Not in Handheld mode. Plug in some Joy-Cons.\n");
@@ -70,77 +64,58 @@ void UI::mainMenu(void){
         printf("Right Joy-Con: %s\n\n", origRight);
         printf("Main menu: \n\n");
 
-        for(int i=0;i<listEntries;i++){
+        for(int i=0; i<listEntries; i++) {
             if(curPos != i){
                 printf("    %s\n", ulist[i].menuList);
-            }
-            else{
+            } else {
                 printf("\x1B[35m--> %s\x1B[0m\n", ulist[i].menuList);
             }
         }
 
-        for(int i=0;i<30-listEntries;i++){
+        for(int i=0; i<30-listEntries; i++) {
             printf("\n");
         }
         printf("\x1B[35m");
-        for(int i=0;i<80;i++){
+        for(int i=0; i<80; i++) {
             printf("*");
         }
         printf("\x1B[0m\n\n");
 
-        if(ulist[curPos].definition != NULL){
+        if(ulist[curPos].definition != NULL) {
             printf("%s\n", ulist[curPos].definition);
         }
 
         padUpdate(&keys);
-        u64 kDown = padGetButtonsDown(&keys);
         u64 kUp = padGetButtonsUp(&keys);
 
-        if(debounce){
-            if(kUp & HidNpadButton_Up){
-                debounce=0;
-            }
-            if(kUp & HidNpadButton_Down){
-                debounce=0;
-            }
-        }
-
-        if(kDown & HidNpadButton_Up){
-            if(debounce==0){
-                debounce=1;
-                if(curPos == 0){
-                    curPos=listEntries-1;
-                }
-                else{
-                    curPos--;
-                }
+        if(kUp & HidNpadButton_Up) {
+            if(curPos == 0){
+                curPos=listEntries-1;
+            } else {
+                curPos--;
             }
         }
 
-        if(kDown & HidNpadButton_Down){
-            if(debounce==0){
-                debounce = 1;
-                if(curPos == listEntries-1){
-                    curPos=0;
-                }else{
-                    curPos++;
-                }
+        if(kUp & HidNpadButton_Down) {
+            if(curPos == listEntries-1) {
+                curPos=0;
+            } else {
+                curPos++;
             }
         }
 
-        if(kUp & HidNpadButton_A){
-            if(strcmp(ulist[curPos].menuList, "Exit") == 0){
+        if(kUp & HidNpadButton_A) {
+            if(strcmp(ulist[curPos].menuList, "Exit") == 0) {
                 break;
             }
             ulist[curPos].entry();
-            isChanged = true;
         }
 
-        if(kUp & HidNpadButton_B){
+        if(kUp & HidNpadButton_B) {
             break;
         }
 
-        if(kDown & HidNpadButton_Plus){
+        if(kUp & HidNpadButton_Plus) {
             break;
         }
 
